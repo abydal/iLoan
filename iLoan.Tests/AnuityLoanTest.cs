@@ -1,5 +1,4 @@
-﻿using System;
-using iLoan.Library;
+﻿using iLoan.Library.DataModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace iLoan.Tests
@@ -13,7 +12,7 @@ namespace iLoan.Tests
             var loan = new AnuityLoan()
             {
                 Amount = 2000000,
-                Interest = 0.035f,
+                Interest = 0.035M,
                 RepaymentYears = 20
             };
 

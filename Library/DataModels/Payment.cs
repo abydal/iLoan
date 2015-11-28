@@ -4,12 +4,12 @@
     {
         public int Period { get; set; }
 
-        public float TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
 
-        public float InterestAmount { get; set; }
+        public decimal InterestAmount { get; set; }
 
-        public float PaymentAmount { get; set; }
+        public decimal PaymentAmount { get; set; }
 
-        public float RemainingDebt { get; set; }
+        public decimal RemainingDebt { get; set; }
     }
 }

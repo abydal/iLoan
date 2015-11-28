@@ -7,15 +7,15 @@ namespace iLoan.Library.DataModels
 {
     internal class SeriesLoan : ILoan
     {
-        public int Amount { get; set; }
-        public float Interest { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Interest { get; set; }
         public int RepaymentYears { get; set; }
         public IEnumerable<Payment> CalculateRepaymentPlan()
         {
             var payments = new List<Payment>();
-            var monthlyInterest = Interest / 12.0;
+            decimal monthlyInterest = Interest / 12.0M;
             var terms = RepaymentYears * 12;
-            var previousValue = (float)Amount;
+            decimal previousValue = Amount;
             var termPayment = Amount/terms; 
 
             for (int period = 1; period < terms + 1; period++)
@@ -26,14 +26,14 @@ namespace iLoan.Library.DataModels
                 var payment = new Payment()
                 {
                     Period = period,
-                    TotalAmount = (float)(termPayment + interest),
-                    InterestAmount = (float)(previousValue * monthlyInterest),
+                    TotalAmount = termPayment + interest,
+                    InterestAmount = previousValue * monthlyInterest,
                     PaymentAmount = termPayment,
                     RemainingDebt = Amount - payments.Sum(p => p.PaymentAmount) - termPayment
                 };
 
                 payments.Add(payment);
-                previousValue = (float)(previousValue-termPayment);
+                previousValue = previousValue-termPayment;
             }
 
             return payments;

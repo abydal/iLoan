@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Net.NetworkInformation;
-using System.Web.Http;
-using Microsoft.Owin;
+﻿using System.Web.Http;
 using Microsoft.Owin.StaticFiles;
 using Owin;
 using Microsoft.Owin.FileSystems;

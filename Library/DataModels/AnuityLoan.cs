@@ -11,52 +11,50 @@ namespace iLoan.Library.DataModels
     */
     public class AnuityLoan : ILoan
     {
-        public int Amount { get; set; }
-        public float Interest { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Interest { get; set; }
         public int RepaymentYears { get; set; }
 
         public IEnumerable<Payment> CalculateRepaymentPlan()
         {
             var payments = new List<Payment>();
-            var monthlyInterest = Interest / 12.0;
-            var terms = RepaymentYears*12;
-            var previousValue = (float)Amount;
+            decimal monthlyInterest = Interest / 12;
+            double terms = RepaymentYears*12;
+            decimal previousValue = Amount;
                  
             for (int period = 1; period < terms+1; period++)
             {
 
-                var annuitet = pmt(monthlyInterest, (terms+1) - period, -previousValue, 0, 0);
-                var currentPaymentAmount = (float) (annuitet - (previousValue*monthlyInterest));
+                decimal annuitet = pmt(monthlyInterest, (terms+1) - period, -previousValue, 0, 0);
+                decimal currentPaymentAmount = (annuitet - (previousValue*monthlyInterest));
 
                 var payment = new Payment()
                 {
                     Period = period,
-                    TotalAmount = (float)annuitet,
-                    InterestAmount = (float) (previousValue*monthlyInterest),
+                    TotalAmount = annuitet,
+                    InterestAmount = previousValue*monthlyInterest,
                     PaymentAmount = currentPaymentAmount,
                     RemainingDebt = Amount - payments.Sum(p => p.PaymentAmount) - currentPaymentAmount
                 };
 
                 payments.Add(payment);
-                previousValue = (float)(previousValue + payment.InterestAmount - annuitet);
+                previousValue = previousValue + payment.InterestAmount - annuitet;
             }
 
             return payments;
         }
 
-        private double pmt(double rate, double periodsLeft, double presentValue, double futureValue, double type)
+        private decimal pmt(decimal rate, double periodsLeft, decimal presentValue, decimal futureValue, int type)
         {
             if (rate == 0)
             {
-                return -presentValue / periodsLeft;
+                return -presentValue / (decimal)periodsLeft;
             }
-            else
-            {
-                var pvif = Math.Pow(1 + rate, periodsLeft);
-                var fvifa = (Math.Pow(1 + rate, periodsLeft) - 1) / rate;
-                var type1 = (type != 0) ? 1 : 0;
-                return ((-presentValue * pvif - futureValue) / ((1 + rate * type1) * fvifa));
-            }
+
+            decimal pvif = (decimal)Math.Pow(1L + (double)rate, periodsLeft);
+            decimal fvifa = (pvif - 1M) / rate;
+            decimal type1 = (type != 0) ? 1 : 0;
+            return ((-presentValue * pvif - futureValue) / ((1 + rate * type1) * fvifa));
         }
     }
 }

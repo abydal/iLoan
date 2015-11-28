@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using iLoan.Library.DataModels;
 using iLoan.Library.DTOs;
 using iLoan.Library.Interfaces;
@@ -12,7 +13,7 @@ namespace iLoan.Library
             var amount = int.Parse(loanDto.Amount);
             var years = int.Parse(loanDto.RepaymentYears);
             var type = loanDto.Type.ToLower() == "1" ? LoanType.Anuity : LoanType.Series;
-            var interest = float.Parse(loanDto.Interest);
+            decimal interest = decimal.Parse(loanDto.Interest,CultureInfo.InvariantCulture);
 
             switch (type)
             {

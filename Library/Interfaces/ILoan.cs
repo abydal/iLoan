@@ -10,9 +10,9 @@ namespace iLoan.Library.Interfaces
     }
     public interface ILoan
     {
-        int Amount { get; set; }
+        decimal Amount { get; set; }
 
-        float Interest { get; set; }
+        decimal Interest { get; set; }
 
         int RepaymentYears { get; set; }
 
