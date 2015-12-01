@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using iLoan.Library.DataModels;
 using iLoan.Library.DTOs;
 using iLoan.Library.Interfaces;
@@ -10,19 +9,12 @@ namespace iLoan.Library
     {
         public static ILoan CreateLoan(LoanDTO loanDto)
         {
-            var amount = int.Parse(loanDto.Amount);
-            var years = int.Parse(loanDto.RepaymentYears);
-            var type = loanDto.Type.ToLower() == "1" ? LoanType.Anuity : LoanType.Series;
-            decimal interest = decimal.Parse(loanDto.Interest,CultureInfo.InvariantCulture);
-
-            switch (type)
+            switch (loanDto.Type)
             {
                 case LoanType.Series:
-                    return new SeriesLoan() {Amount = amount, Interest = interest, RepaymentYears = years};
-                    break;
+                    return new SeriesLoan {Amount = loanDto.Amount, Interest = loanDto.Interest, RepaymentYears = loanDto.RepaymentYears};
                 case LoanType.Anuity:
-                    return new AnuityLoan() {Amount = amount, Interest = interest, RepaymentYears = years};
-                    break;
+                    return new AnuityLoan {Amount = loanDto.Amount, Interest = loanDto.Interest, RepaymentYears = loanDto.RepaymentYears};
             }
 
             throw new ArgumentException("Arguments could not be parsed correctly.");

@@ -1,20 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
 using iLoan.Library;
-using iLoan.Library.DataModels;
 using iLoan.Library.DTOs;
 
 namespace iLoan.API.Controllers
 {
     public class LoanController : ApiController
     {
-        [System.Web.Http.HttpPost]
-        public JsonResult<IEnumerable<Payment>> Post(LoanDTO loanDto)
+        [HttpPost]
+        public HttpResponseMessage Post(LoanDTO loanDto)
         {
-            var loan = LoanFactory.CreateLoan(loanDto);
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
 
-            return Json(loan.CalculateRepaymentPlan());
+            var loan = LoanFactory.CreateLoan(loanDto);
+            var repaymentPlan = loan.CalculateRepaymentPlan();
+
+            return Request.CreateResponse(HttpStatusCode.OK, repaymentPlan);
         }
     }
 }
