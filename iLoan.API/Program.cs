@@ -1,28 +1,33 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Net.Http;
-using Microsoft.Owin.Hosting;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace iLoan.API
+// Add services to the container.
+
+builder.Services.AddControllers().AddJsonOptions(options =>
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            StartOptions options = new StartOptions("http://localhost:8080/");
-            options.Urls.Add("http://127.0.0.1:8080/");
-            options.Urls.Add(string.Format("http://{0}:8080", Environment.MachineName));
-            options.Urls.Add("http://*:8080/");
-            options.Port = 8080;
+    options.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString;
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+});
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-            // Start OWIN host 
-            using (WebApp.Start<Startup>(options))
-            {
-                Console.WriteLine("Server running at port " +options.Port);
-                Console.ReadLine();
-            }
+var app = builder.Build();
 
-            
-        }
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+
+app.UseStaticFiles("/public");
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+app.UseFileServer();
+
+app.Run();

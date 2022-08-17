@@ -1,14 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BBC04905-8C0B-40A4-9954-9FCA77F2892E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8EFD275-C67D-47F1-BAAC-4D1258417DE1}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iLoan.Library", "Library\iLoan.Library.csproj", "{2CC1299A-3B6B-4B82-BCB6-11E7E36CA420}"
 EndProject
@@ -44,5 +41,8 @@ Global
 		{2CC1299A-3B6B-4B82-BCB6-11E7E36CA420} = {BBC04905-8C0B-40A4-9954-9FCA77F2892E}
 		{8D153EE3-A2B1-4BB6-A878-FAFCD6E975E6} = {B3444E93-E8C6-4FDC-8A4B-E2C4427CF0C4}
 		{5F9D6DE3-B399-4FC2-B619-1550E1B1242C} = {BBC04905-8C0B-40A4-9954-9FCA77F2892E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3FF3313-2647-4E6E-BF1B-D2F9411E76F8}
 	EndGlobalSection
 EndGlobal

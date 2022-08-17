@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using iLoan.Library.Interfaces;
+﻿using iLoan.Library.Interfaces;
 
 
 namespace iLoan.Library.DataModels
